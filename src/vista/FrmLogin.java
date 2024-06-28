@@ -4,7 +4,7 @@ import java.awt.Dimension;
 
 /**
  *
- * @author Axel
+ * @author Axel 
  */
 public class FrmLogin extends javax.swing.JFrame {
 
