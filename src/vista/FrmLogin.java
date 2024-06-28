@@ -1,21 +1,14 @@
 package vista;
 
-import java.awt.Dimension;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 
-/**
- *
- * @author Axel 
- */
 public class FrmLogin extends javax.swing.JFrame {
-
-    public FrmLogin() {
+    public FrmLogin(){
         initComponents();
-        this.setResizable(false);
-        this.setLocationRelativeTo(null);
-        this.setTitle("Login - PUNTO DE VENTAS");
-        this.setSize(new Dimension(700, 500));
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -152,12 +145,55 @@ public class FrmLogin extends javax.swing.JFrame {
 
     private void jButton_IniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_IniciarSesionActionPerformed
         // TODO add your handling code here:
+        String usuario = txt_usuario.getText();
+        String password = new String(txt_password.getPassword());
+        
+        if (verificarCredenciales(usuario, password)) {
+            JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso.");
+            //código de redirección a la siguiente ventana.
+        }else{
+            JOptionPane.showMessageDialog(this, "Usuario o contraseñas incorrectos.", "Error de inicio de sesión.",JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton_IniciarSesionActionPerformed
 
+    private boolean verificarCredenciales(String usuario, String password){
+        try (BufferedReader br= new BufferedReader(new FileReader("resources/usuarios.txt"))){
+            String line;
+            while((line = br.readLine()) != null){
+                String[] partes = line.split(":");
+                if(partes.length == 2){
+                    String usuarioArchivo = partes[0];
+                    String passwordArchivo = partes[1];
+                    if (usuario.equals(usuarioArchivo) && password.equals(passwordArchivo)) {
+                        return true;
+                    }
+                }
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        try{
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        }catch (ClassNotFoundException ex){
+            java.util.logging.Logger.getLogger(FrmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }catch (InstantiationException ex){
+            java.util.logging.Logger.getLogger(FrmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }catch (IllegalAccessException ex){
+            java.util.logging.Logger.getLogger(FrmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }catch (javax.swing.UnsupportedLookAndFeelException ex){
+            java.util.logging.Logger.getLogger(FrmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
