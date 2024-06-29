@@ -8,7 +8,6 @@ import javax.swing.JOptionPane;
 public class FrmLogin extends javax.swing.JFrame {
     public FrmLogin(){
         initComponents();
-        this.setTitle("Sistema de Ventas");
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -152,9 +151,6 @@ public class FrmLogin extends javax.swing.JFrame {
         if (verificarCredenciales(usuario, password)) {
             JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso.");
             //código de redirección a la siguiente ventana.
-            FrmMenu menu = new FrmMenu();
-            menu.setVisible(true);
-            this.dispose();
         }else{
             JOptionPane.showMessageDialog(this, "Usuario o contraseñas incorrectos.", "Error de inicio de sesión.",JOptionPane.ERROR_MESSAGE);
         }
